@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Previsioni Meteo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <div class="search">
+        <input type="text" placeholder="Inserisci nome citta" spellcheck="false">
+        <button><img src="images/search.png" alt=""></button>
+    </div>
+    <div class="weather">
+        <img src="images/rain.png" alt="" class="weather-icon">
+        <h1 class="temp">22℃</h1>
+        <h2 class="city">Lisbona</h2>
+        <div class="details">
+            <div class="col">
+                <img src="images/humidity.png" alt="">
+                <div>
+                    <p class="humidity">50%</p>
+                    <p>Humidity</p>
+                </div>
+            </div>
+            <div class="col">
+                <img src="images/wind.png" alt="">
+                <div>
+                    <p class="wind">15 Km/h</p>
+                    <p>Wind Speed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <script >
+    const apiKey="dec26dcf2edd8d056ec0e5e52d20b9df"
+    const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q="
+    const searchBox=document.querySelector(".search input")
+    const searchBtn=document.querySelector(".search button")
+    const weatherIcon=document.querySelector(".weather-icon")
+    async function checkWeather(city){
+        const response=await fetch(apiUrl + city + `&appid=${apiKey}`)
+        var data= await response.json() //mi fa vedere tutti i dati della citta in questione, bangalore
+        console.log(data)
+        document.querySelector(".city").innerHTML= data.name
+        document.querySelector(".temp").innerHTML= Math.floor(data.main.temp) + "℃"
+        document.querySelector(".humidity").innerHTML= data.main.humidity +"%"
+        document.querySelector(".wind").innerHTML= data.wind.speed + "Km/h"
+
+        if(data.weather[0].main=="Clouds"){
+            weatherIcon.src="images/clouds.png"
+        }else if(data.weather[0].main=="Clear"){
+            weatherIcon.src="images/clear.png"
+         }else if(data.weather[0].main=="Rain"){
+            weatherIcon.src="images/rain.png"
+         }else if(data.weather[0].main=="Drizzle"){
+            weatherIcon.src="images/drizzle.png"
+         }else if(data.weather[0].main=="Mist"){
+            weatherIcon.src="images/mist.png"
+         }
+        
+        }
+      
+    searchBtn.addEventListener("click",()=>{
+        checkWeather(searchBox.value)
+          
+            document.querySelector(".weather").classList.add("open","change");
+
+  // Riavvia animazione
+  weather.classList.remove("change");
+  void weather.offsetWidth;
+  weather.classList.add("change");
+           
+    })
+    function celcToFahr( celsius ) {
+    return ((celsius * 9.0 / 5.0) + 32.0);
+} 
+function fahrToCelc(fahrenheit) {
+  return ((fahrenheit - 32.0) * 5.0 / 9.0);
+}
+const temperatura=document.querySelector(".temp")
+let isCelsius = true; // 🔁 variabile che tiene traccia dell'unità attuale
+
+temperatura.addEventListener("click", () => {
+  let valore = parseFloat(temperatura.textContent); // es: "25℃" → 25
+
+  if (isCelsius) {
+    const fahrenheit = celcToFahr(valore);
+    temperatura.textContent = fahrenheit.toFixed(1) + "℉";
+    isCelsius = false;
+  } else {
+    const celsius = fahrToCelc(valore);
+    temperatura.textContent = Math.floor(celsius) + "℃";
+    isCelsius = true;
+  }
+});
+
+  </script>
+</body>
+</html>

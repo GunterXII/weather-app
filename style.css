@@ -1,0 +1,151 @@
+/* Importa un font pulito da Google */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #1e1e2f;
+  font-family: 'Inter', sans-serif;
+  color: #f0f0f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.card {
+  background: #2a284f;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.search {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.search input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  outline: none;
+  background: #f0f0f5;
+  color: #2a284f;
+  transition: background 0.2s ease;
+}
+
+.search input:focus {
+  background: #ffffff;
+}
+
+.search button {
+  margin-left: 0.75rem;
+  background: #ff9f1c;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.search button:hover {
+  background: #e08915;
+}
+
+.search button img {
+  width: 20px;
+  filter: invert(1);
+}
+
+.weather-icon {
+  width: 120px;
+  margin: 1.5rem auto;
+}
+
+.weather h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.weather h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #d0d0e0;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.col img {
+  width: 28px;
+  filter: invert(1);
+}
+
+.humidity, .wind {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.weather {
+  display: none;  /* inizialmente nascosto */
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.weather.open {
+  display: block;
+}
+
+.weather.change {
+  animation: change 0.8s ease;
+}
+
+@keyframes change {
+  0% {
+    transform: translate(100px, -100px) scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+
+
+/* Quando aggiungiamo la classe .open la facciamo “scorrere” */
+.weather.open {
+  max-height: 1000px;    /* sufficientemente alto per contenere i dati */
+  opacity: 1;
+  display: block;
+}
